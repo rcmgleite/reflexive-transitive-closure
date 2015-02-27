@@ -80,16 +80,17 @@
 ; ii) - Fecho transitivo:
 ;     Exemplo:
 ;     R = { 〈1, 2〉, 〈1, 5〉, 〈2, 3〉, 〈3, 4〉 } ->{ 〈1, 2〉, 〈1, 3〉, 〈1, 4〉, 〈1, 5〉, 〈2, 3〉, 〈2, 4〉, 〈3, 4〉 }
-(define (transitive-closure2 _relation)
-  (define transitive-new-relation (transitive-closure _relation))
+(define (transitive-closure _relation)
+  (define transitive-new-relation (transitive-closure-internal _relation))
   
   (if (set-contains _relation transitive-new-relation)
       _relation
-      (transitive-closure2 (append _relation transitive-new-relation))
+      (transitive-closure-internal (append _relation transitive-new-relation))
   )
 )
 
-(define (transitive-closure _relation)
+; internal function for 'transitive-closure'
+(define (transitive-closure-internal _relation)
   (letrec ([transitive-closure-rec
             (lambda (relation-iterator return-list)
               
@@ -112,10 +113,12 @@
   )
 )
 
+; Search for all pairs that can be created by transitivity and adds them
 (define (add-related-pairs first-index second-index _relation curr-list)
   (do-add first-index (select-pairs-by-key _relation second-index) curr-list)
 )
 
+; internal recursive function that do the actual work for 'add-related-pairs'
 (define (do-add first-index selected-pairs return-list)
   (if (null? selected-pairs)
       return-list
@@ -145,6 +148,7 @@
   )
 )
 
+; Verify if a set contains a sub-set
 (define (set-contains _set _sub-set)
   (if (null? _sub-set)
       true
