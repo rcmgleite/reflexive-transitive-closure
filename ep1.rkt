@@ -1,7 +1,7 @@
 ; -------------- EP1 Lógica computacional --------------
 ; Grupo: 
-;   Lucas Soriani
-;   Rafael Camargo Leite
+;   Lucas Soriani - 7209530
+;   Rafael Camargo Leite - 7629953
 
 #lang racket
 
