@@ -110,7 +110,7 @@
 (define (do-add first-index selected-pairs return-list)
   (if (null? selected-pairs)
       return-list
-      (do-add first-index (cdr selected-pairs) (append return-list (list (cons first-index (cdr (car selected-pairs))))))
+      (do-add first-index (cdr selected-pairs) (add-pair-to-list return-list (cons first-index (cdr (car selected-pairs)))))
   )
 )
 
@@ -128,7 +128,7 @@
 ;
 (define (add-pair-to-list _list _pair)
   (if (null? _list)
-      null
+      (list _pair)
       (if (member _pair _list)
           _list
           (append _list (list _pair))
