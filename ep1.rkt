@@ -80,6 +80,15 @@
 ; ii) - Fecho transitivo:
 ;     Exemplo:
 ;     R = { 〈1, 2〉, 〈1, 5〉, 〈2, 3〉, 〈3, 4〉 } ->{ 〈1, 2〉, 〈1, 3〉, 〈1, 4〉, 〈1, 5〉, 〈2, 3〉, 〈2, 4〉, 〈3, 4〉 }
+(define (transitive-closure2 _relation)
+  (define transitive-new-relation (transitive-closure _relation))
+  
+  (if (set-contains _relation transitive-new-relation)
+      _relation
+      (transitive-closure2 (append _relation transitive-new-relation))
+  )
+)
+
 (define (transitive-closure _relation)
   (letrec ([transitive-closure-rec
             (lambda (relation-iterator return-list)
@@ -135,5 +144,23 @@
       )
   )
 )
+
+(define (set-contains _set _sub-set)
+  (if (null? _sub-set)
+      true
+      (let ([ inside-func
+              (lambda (_ignore)
+                (if (member (car _sub-set) _set)
+                    (set-contains _set (cdr _sub-set))
+                    false
+                    )
+              )
+           ])
+        (inside-func null)
+      )
+  )
+)
+
+
 ; Just for tests
 (define t (list (cons 1 2) (cons 1 5) (cons 2 3) (cons 3 4)))
